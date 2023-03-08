@@ -34,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.jettipapp.components.InputField
 import com.example.jettipapp.ui.theme.JetTipAppTheme
+import com.example.jettipapp.utils.calculatePerPerson
+import com.example.jettipapp.utils.calculateTotalTip
 import com.example.jettipapp.widgets.RoundedIconButton
 
 @ExperimentalComposeUiApi
@@ -43,7 +45,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             JetTipAppTheme {
                 MyApp {
-                    //TopHeader()
                     MainContent()
                 }
             }
@@ -109,6 +110,7 @@ fun MainContent() {
     val totalPerPersonState = remember {
         mutableStateOf(0.0)
     }
+
 
     Column(modifier = Modifier.padding(all = 12.dp)) {
         BillForm(
@@ -194,12 +196,12 @@ fun BillForm(
                                 splitByState.value =
                                     if (splitByState.value > 1) splitByState.value - 1 else 1
 
-                              /*  totalPerPersonState.value =
+                                totalPerPersonState.value =
                                     calculatePerPerson(
                                         totalBill = totalBillState.value.toDouble(),
                                         splitBy = splitByState.value,
                                         tipPercentage = tipPercentage
-                                    )*/
+                                    )
                             }
                         )
                         Text(
@@ -215,12 +217,12 @@ fun BillForm(
                                     splitByState.value += 1
                                 }
 
-                                /*totalPerPersonState.value =
+                                totalPerPersonState.value =
                                     calculatePerPerson(
                                         totalBill = totalBillState.value.toDouble(),
                                         splitBy = splitByState.value,
                                         tipPercentage = tipPercentage
-                                    )*/
+                                    )
                             }
                         )
 
@@ -251,7 +253,7 @@ fun BillForm(
                         value = sliderPositionState.value,
                         onValueChange = { newVal ->
                             sliderPositionState.value = newVal
-                           /* tipAmountState.value =
+                            tipAmountState.value =
                                 calculateTotalTip(
                                     totalBill = totalBillState.value.toDouble(),
                                     tipPercentage = tipPercentage
@@ -261,7 +263,7 @@ fun BillForm(
                                     totalBill = totalBillState.value.toDouble(),
                                     splitBy = splitByState.value,
                                     tipPercentage = tipPercentage
-                                )*/
+                                )
                         },
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp),
                         steps = 5,
@@ -273,6 +275,7 @@ fun BillForm(
 
             } else {
                 Box() {}
+                totalPerPersonState.value = 0.00
             }
         }
     }
